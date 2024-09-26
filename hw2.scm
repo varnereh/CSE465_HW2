@@ -96,14 +96,20 @@
 
 ; Helper methods for min and max (just a min function and a max function)
 ; Finds minimum value
-(define (list-min lst)
-  (if (null? (cdr lst))
+(define (minlst lst)
+  (if (= (length lst) 1)
       (car lst)
-      (min (car lst) (list-min (cdr lst)))))
-; Finds maximum value
-(define (max lst)
+      (min (car lst) (minlst (cdr lst)))
+      )
+)
 
-  )
+; Finds maximum value
+(define (maxlst lst)
+  (if (= (length lst) 1)
+      (car lst)
+      (max (car lst) (maxlst (cdr lst)))
+      )
+)
 
 
 
