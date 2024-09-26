@@ -140,9 +140,12 @@
 
 ; ---------------------------------------------
 
-; Helper method for cross product
-(define (crossproduct_help element lst)
-  
+; Helper method for cross product. Pairs element with another
+(define (crossproduct_help lst1element lst2element)
+  (if (null? lst2element)
+      '() ; return empty list if null
+      (cons (list lst1element (car lst2element)) ; else construct list with the elements
+      (crossproduct_help lst1element (cdr lst2element))))
 )
 
 
