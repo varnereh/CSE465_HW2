@@ -119,10 +119,14 @@
 ; ---------------------------------------------
 
 ; Returns a list identical to the first list, while having all elements
-; that are inside nested loops taken out. So we want to flatten all elements and have
+; that are inside nested lists taken out. So we want to flatten all elements and have
 ; them all in a single list. For example '(a (a a) a))) should become (a a a a)
 (define (flatten lst)
-	'()
+	(if (null? lst)
+            '() ; return empty lst if empty
+            (if (list? (car lst)) ; else check if element is a list
+                (append (flatten (car lst)) (flatten (cdr lst))) ; flatten first element and then do the rest
+                (cons (car lst) (flatten (cdr lst))))) ; if first element is not list, construct list and then recursively do rest
 )
 
 (line "flatten")
