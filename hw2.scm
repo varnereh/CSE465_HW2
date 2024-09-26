@@ -59,8 +59,16 @@
 
 ; Returns true if the two lists have identical structure
 ; in terms of how many elements and nested lists they have in the same order
+; ChatGPT assisted with order of checking
 (define (struct lst1 lst2)
-	#t
+	(cond ; condition for better formatting, since there are so many checks
+          ((and (null? lst1) (null? lst2)) #t) ; if both of them are null
+          ((or (null? lst1) (null? lst2)) #f) ; if one is null and the other is not, false
+          ((and (list? (car lst1)) (list? (car lst2)))   ; check if both first elements are lists
+              (and (struct (car lst1) (car lst2))(struct (cdr lst1) (cdr lst2))))  ; recursively check rest
+          ((and (not (list? (car lst1))) (not (pair? (car lst2)))) ; if both first elements aren't lists
+           (struct (cdr lst1) (cdr lst2)))
+          (else #f)) ; anything else means they are different
 )
 
 (line "struct")
@@ -78,7 +86,7 @@
 ; in the list and the second is the largest in the list. 
 ; lst -- contains numeric values, and length is >= 1.
 (define (minAndMax lst)
-	'()
+	
 )
 
 (line "minAndMax")
