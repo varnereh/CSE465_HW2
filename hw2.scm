@@ -94,6 +94,16 @@
 (mydisplay (minAndMax '(1)))  ; -> (1 1)
 (line "minAndMax")
 
+; Helper methods for min and max (just a min function and a max function)
+; Finds minimum value
+(define (list-min lst)
+  (if (null? (cdr lst))
+      (car lst)
+      (min (car lst) (list-min (cdr lst)))))
+; Finds maximum value
+(define (max lst)
+
+  )
 
 
 
