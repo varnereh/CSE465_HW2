@@ -140,13 +140,22 @@
 
 ; ---------------------------------------------
 
+; Helper method for cross product
+(define (crossproduct_help element lst)
+  
+)
+
+
 ; The paramters are two lists. The result should contain the cross product
 ; between the two lists: 
 ; The inputs '(1 2) and '(a b c) should return a single list:
 ; ((1 a) (1 b) (1 c) (2 a) (2 b) (2 c))
 ; lst1 & lst2 -- two flat lists.
 (define (crossproduct lst1 lst2)
-	'()
+	(if (null? lst1) ; check if the first list is empty
+            '() ; return empty list if so
+            (append (crossproduct_help (car lst1) lst2) ; use a helper method to recursively pair the first num of lst1 with lst2
+                    (crossproduct (cdr lst1) lst2)))  ; recursively do the rest of the pairs
 )
 
 (line "crossproduct")
