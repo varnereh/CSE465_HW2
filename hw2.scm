@@ -82,18 +82,6 @@
 
 ; ---------------------------------------------
 
-; Returns a list of two numeric values. The first is the smallest
-; in the list and the second is the largest in the list. 
-; lst -- contains numeric values, and length is >= 1.
-(define (minAndMax lst)
-	
-)
-
-(line "minAndMax")
-(mydisplay (minAndMax '(1 2 -3 4 2)))  ; -> (-3 4)
-(mydisplay (minAndMax '(1)))  ; -> (1 1)
-(line "minAndMax")
-
 ; Helper methods for min and max (just a min function and a max function)
 ; Finds minimum value
 (define (minlst lst)
@@ -110,6 +98,21 @@
       (max (car lst) (maxlst (cdr lst)))
       )
 )
+
+
+; Returns a list of two numeric values. The first is the smallest
+; in the list and the second is the largest in the list. 
+; lst -- contains numeric values, and length is >= 1.
+(define (minAndMax lst)
+  (list (minlst lst) (maxlst lst)) ; use helper methods to just return the two
+)
+
+(line "minAndMax")
+(mydisplay (minAndMax '(1 2 -3 4 2)))  ; -> (-3 4)
+(mydisplay (minAndMax '(1)))  ; -> (1 1)
+(line "minAndMax")
+
+
 
 
 
