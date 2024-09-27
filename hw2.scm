@@ -178,11 +178,16 @@
 ; from the 'zipcodes.scm' file for this. You can just call 'zipcodes' directly
 ; as shown in the sample example
 (define (getLatLon zipcode zips)
-	(list zipcode (car zips))
+	(if (null? zips)
+            '() ; return empty list if null
+            (let ((entry (car zips)))  ; get the first element in the list (ChatGPT taught me of (let))
+            (if (= (car entry) zipcode) ; if the zip code element in the list matches input zip
+                (list (list-ref entry 4) (list-ref entry 5)) ; return the fourth and fifth element of the list
+                (getLatLon zipcode(cdr zips))))) ; check the rest of the list
 )
 
 (line "getLatLon")
-(mydisplay (getLatLon 45056 zipcodes))
+(mydisplay (getLatLon 99612 zipcodes))
 (line "getLatLon")
 
 
