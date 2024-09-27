@@ -180,9 +180,9 @@
 (define (getLatLon zipcode zips)
 	(if (null? zips)
             '() ; return empty list if null
-            (let ((entry (car zips)))  ; get the first element in the list (ChatGPT taught me of (let))
-            (if (= (car entry) zipcode) ; if the zip code element in the list matches input zip
-                (list (list-ref entry 4) (list-ref entry 5)) ; return the fourth and fifth element of the list
+            (let ((element (car zips)))  ; get the first element in the list (ChatGPT taught me of (let))
+            (if (= (car element) zipcode) ; if the zip code element in the list matches input zip
+                (list (list-ref element 4) (list-ref element 5)) ; return the fourth and fifth element of the list
                 (getLatLon zipcode(cdr zips))))) ; check the rest of the list
 )
 
@@ -216,7 +216,12 @@
 ; state -- state
 ; zips -- zipcode DB
 (define (zipCount state zips)
-	0
+	(if (null? zips) ; check if null
+            0 ; return zero as base case
+            (let ((element (car zips))) ; else grab an element from zips
+            (if (equal? state (list-ref element 2)) ; if the state matches the line
+               (+ 1 (zipCount state (cdr zips))) ; if it matches, add one to count and check the rest
+               (zipCount state (cdr zips))))) ; if not, don't add to count, but check rest of the list                    
 )
 
 (line "zipCount")
