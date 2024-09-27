@@ -195,12 +195,35 @@
 
 ; ---------------------------------------------
 
+; Helper methods for getCommonPlaces
+
+; Method to get all relevant places
+(define (getPlaces state zips)
+  (if (null? zips) ; check if null
+      '()  ; if so, return empty list
+      (let ((entry (car zips))) ; else, get variable of the first zip line
+      (if (equal? state (list-ref entry 2))  ; if state matches the argument
+            (cons (list-ref entry 1) (getPlaces state (cdr zips)))  ; if so, add the name of the place, and get the rest of the places
+            (getPlaces state (cdr zips)))))  ; skip it if it doesn't match, and check rest
+)
+
+; Method to determine which places are common
+(define (commonPlaces places1 places2)
+  (if (null? places1) ; check if null
+      '()  ; if so, return empty list
+      (if (member (car places1) places2) ; if the place is in both lists (ChatGPT introduced me to (member))
+          (cons (car places1) (commonPlaces (cdr places1) places2))  ; if so, add it to result and find the rest of the places
+          (commonPlaces (cdr places1) places2))) ; else, skip and check rest
+)       
+
 ; Returns a list of all the place names common to two states.
 ; state1 -- the first state to look for
 ; state2 -- the second state to look for
 ; zips -- the zipcode DB
 (define (getCommonPlaces state1 state2 zips)
-	(list state1 state2)
+	(let ((places1 (getPlaces state1 zips))   ; make variable for state1 places
+        (places2 (getPlaces state2 zips)))  ; make variable for state2 places
+    (commonPlaces places1 places2))        ; use the variables to determine the common places
 )
 
 (line "getCommonPlaces")
