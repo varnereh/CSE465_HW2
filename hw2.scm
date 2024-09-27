@@ -239,6 +239,15 @@
 (define (LARGE? x) (>= (abs x) 10))
 (define (SMALL? x) (not (LARGE? x)))
 
+; Helper method to check if all the filters apply
+(define (filtersApply element filters)
+  (if (null? filters) ; check if null
+      #t  ; if there are no filters, then it is true
+      (if ((car filters) element)  ; else apply the first filter
+          (filtersApply element (cdr filters))  ; check the rest of the filters
+          #f)))  ; if any filter doesn't work, return false
+
+
 ; Returns a list of items that satisfy a set of predicates.
 ; For example (filterList '(1 2 3 4 100) '(EVEN?)) should return the even numbers (2 4 100)
 ; (filterList '(1 2 3 4 100) '(EVEN? SMALL?)) should return (2 4)
@@ -246,7 +255,12 @@
 ; filters -- list of predicates to apply to the individual elements
 
 (define (filterList lst filters)
-	lst
+    (if (null? lst) ; check if null
+       '()  ; if lst is null (base case) return empty list
+       (let ((element (car lst))) ; make an element a variable
+       (if (filtersApply element filters)  ; check if the element works with the filters
+           (cons element (filterList (cdr lst) filters))  ; if it does, add it to result, and check the rest
+           (filterList (cdr lst) filters))))  ; if it doesn't, don't add it, and check the rest
 )
 
 (line "filterList")
